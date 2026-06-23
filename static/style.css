@@ -1,0 +1,238 @@
+/* ================= LOGIN ================= */
+
+.login-bg {
+    background: linear-gradient(135deg, #27c2e3, #2a7de1);
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 120px;
+}
+
+.login-card {
+    background: white;
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.logo-login {
+    font-size: 60px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.login-title {
+    color: #0d47a1;
+    text-align: center;
+    font-weight: bold;
+}
+
+.btn-login {
+    background: #1565c0;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background: #0d47a1;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar {
+    background: linear-gradient(90deg, #004aad, #27c2e3);
+    padding: 15px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+}
+
+.navbar-brand {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: white !important;
+    margin: 0 8px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: #d9f5ff !important;
+}
+
+.nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid white;
+}
+
+/* ================= BODY ================= */
+
+body {
+    background: #f4f7fc;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    background: linear-gradient(90deg, #27c2e3, #1565c0);
+    color: white;
+    padding: 35px;
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+/* ================= CARD DASHBOARD ================= */
+
+.card-menu {
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    border: none;
+}
+
+.card-menu:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.card-menu p {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-weight: 600;
+    color: #1c4e80;
+}
+
+.menu-icon {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+/* ================= STAT CARD ================= */
+
+.stat-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: none;
+}
+
+.stat-card h2 {
+    color: #1565c0;
+    font-weight: bold;
+}
+
+.stat-card p {
+    color: #666;
+    margin-bottom: 0;
+}
+
+/* ================= TABLE ================= */
+
+.table {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.table thead {
+    background: #1565c0;
+    color: white;
+}
+
+.table-hover tbody tr:hover {
+    background: #eef6ff;
+}
+
+/* ================= BUTTON ================= */
+
+.btn-primary {
+    background: #1565c0;
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-primary:hover {
+    background: #0d47a1;
+}
+
+.btn-success {
+    border-radius: 10px;
+}
+
+.btn-danger {
+    border-radius: 10px;
+}
+
+.btn-secondary {
+    border-radius: 10px;
+}
+
+/* ================= BADGE ================= */
+
+.badge {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 20px;
+}
+
+/* ================= CARD UMUM ================= */
+
+.card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* ================= FORM ================= */
+
+.form-control,
+.form-select {
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #27c2e3;
+    box-shadow: 0 0 5px rgba(39,194,227,0.4);
+}
+
+/* ================= SCROLL ================= */
+
+html,
+body {
+    min-height: 100%;
+    overflow-y: auto;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    .header {
+        padding: 25px;
+    }
+
+    .stat-card,
+    .card-menu {
+        margin-bottom: 15px;
+    }
+
+}
