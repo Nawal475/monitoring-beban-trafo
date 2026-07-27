@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Akun | TMS PLN
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Edit Akun</h1>
+
+    <p>
+
+        Perbarui informasi akun pengguna.
+
+    </p>
+
+</div>
+
+<div class="card">
+
+    <div class="card-body p-4">
+
+        <form method="POST">
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Nama
+
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    name="nama"
+                    value="{{ user[1] }}"
+                    required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Email
+
+                </label>
+
+                <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    value="{{ user[2] }}"
+                    required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Username
+
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    name="username"
+                    value="{{ user[3] }}"
+                    required>
+
+            </div>
+
+             <div class="mb-3">
+                <label class="form-label">
+
+                    Password Baru
+
+                </label>
+                
+                <input type="password"
+                    class="form-control"
+                    name="password">
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Role
+
+                </label>
+
+                <select
+                    class="form-select"
+                    name="role">
+
+                    <option
+                        value="admin"
+                        {% if user[4] == "admin" %}selected{% endif %}>
+
+                        Administrator
+
+                    </option>
+
+                    <option
+                        value="petugas"
+                        {% if user[4] == "petugas" %}selected{% endif %}>
+
+                        Petugas
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="d-grid">
+
+                <button
+                    class="btn btn-primary">
+
+                    Simpan Perubahan
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

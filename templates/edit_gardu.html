@@ -1,0 +1,256 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Gardu
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Edit Gardu</h1>
+
+    <p>
+
+        Perbarui data gardu distribusi PLN.
+
+    </p>
+
+</div>
+
+<div class="card">
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            <div class="row">
+
+                <!-- Nomor -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Nomor Urut
+
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        value="{{ gardu.nomor }}"
+                        readonly>
+
+                </div>
+
+                <!-- Nama Gardu -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Nama Gardu
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="nama_gardu"
+                        value="{{ gardu.nama }}"
+                        required>
+
+                </div>
+
+                <!-- Penyulang -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Penyulang
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="penyulang"
+                        value="{{ gardu.penyulang }}"
+                        required>
+
+                </div>
+
+                <!-- No Gardu -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        No Gardu
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="no_gardu"
+                        value="{{ gardu.nogardu }}"
+                        required>
+
+                </div>
+
+                <!-- Wilayah -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Wilayah Kerja
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="wilayah"
+                        value="{{ gardu.wilayah }}"
+                        required>
+
+                </div>
+
+                <!-- Jenis -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Jenis
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="jenis"
+                        value="{{ gardu.jenis }}"
+                        required>
+
+                </div>
+
+                <!-- Daya -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Daya (kVA)
+
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        class="form-control"
+                        name="daya"
+                        value="{{ gardu.daya }}"
+                        required>
+
+                </div>
+
+                <!-- Tahun -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+
+                        Tahun
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        name="tahun"
+                        required>
+
+                        {% for t in daftar_tahun %}
+
+                        <option
+                            value="{{ t }}"
+                            {% if gardu.tahun|string == t|string %}
+                            selected
+                            {% endif %}>
+
+                            {{ t }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <!-- Triwulan -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+
+                        Triwulan
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        name="triwulan"
+                        required>
+
+                        {% for tr in daftar_triwulan %}
+
+                        <option
+                            value="{{ tr }}"
+                            {% if gardu.triwulan == tr %}
+                            selected
+                            {% endif %}>
+
+                            {{ tr }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <button
+                type="submit"
+                class="btn btn-warning">
+
+                <i class="bi bi-pencil-square"></i>
+
+                Update Data
+
+            </button>
+
+            <a
+                href="/gardu"
+                class="btn btn-secondary">
+
+                Kembali
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

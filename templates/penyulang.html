@@ -1,93 +1,181 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-    <title>Data Penyulang</title>
+{% block title %}
+Data Penyulang
+{% endblock %}
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+{% block content %}
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-</head>
+<div class="page-header mb-4">
 
-<body class="bg-light">
-
-{% include 'navbar.html' %}
-
-<div class="container mt-4">
-
-    <h2 class="mb-4">
+    <h1>
         Data Penyulang
-    </h2>
+    </h1>
 
-    <div class="card shadow p-4">
+    <p>
+        Informasi penyulang berdasarkan data gardu distribusi PLN.
+    </p>
 
-        <table class="table table-hover align-middle">
+</div>
 
-            <thead class="table-primary">
+<div class="card shadow-sm border-0 rounded-4">
 
-                <tr>
-                    <th>Penyulang</th>
-                    <th>Wilayah</th>
-                    <th>Jumlah Gardu</th>
-                    <th>Beban Rata-rata</th>
-                    <th>Gardu Overload</th>
-                    <th>Status</th>
-                </tr>
+    <div class="card-body p-4">
 
-            </thead>
+        <form method="GET" class="row g-3 mb-4">
 
-            <tbody>
+            <div class="col-md-4">
 
-                <tr>
-                    <td>PLG-01</td>
-                    <td>Desa A</td>
-                    <td>5</td>
-                    <td>72%</td>
-                    <td>0</td>
-                    <td>
-                        <span class="badge bg-success">
-                            Normal
-                        </span>
-                    </td>
-                </tr>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="cari"
+                    placeholder="Cari Penyulang..."
+                    value="{{ cari }}">
 
-                <tr>
-                    <td>PLG-02</td>
-                    <td>Desa B</td>
-                    <td>3</td>
-                    <td>88%</td>
-                    <td>1</td>
-                    <td>
-                        <span class="badge bg-warning text-dark">
-                            Waspada
-                        </span>
-                    </td>
-                </tr>
+            </div>
 
-                <tr>
-                    <td>PLG-03</td>
-                    <td>Desa C</td>
-                    <td>2</td>
-                    <td>110%</td>
-                    <td>1</td>
-                    <td>
-                        <span class="badge bg-danger">
-                            Overload
-                        </span>
-                    </td>
-                </tr>
+            <div class="col-md-3">
 
-            </tbody>
+                <select
+                    class="form-select"
+                    name="tahun">
 
-        </table>
+                    {% for t in daftar_tahun %}
+
+                    <option
+                        value="{{ t }}"
+                        {% if tahun == t %}selected{% endif %}>
+
+                        {{ t }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <select
+                    class="form-select"
+                    name="triwulan">
+
+                    {% for tr in daftar_triwulan %}
+
+                    <option
+                        value="{{ tr }}"
+                        {% if triwulan == tr %}selected{% endif %}>
+
+                        {{ tr }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="col-md-2 d-grid">
+
+                <button
+                    class="btn btn-primary">
+
+                    Filter
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h3 class="fw-bold mb-0">
+                Daftar Penyulang
+            </h3>
+
+            <span class="badge bg-primary fs-6">
+
+                {{ total }} Penyulang
+
+            </span>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>No</th>
+
+                        <th>Nama Penyulang</th>
+
+                        <th>Jumlah Gardu</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% if data %}
+
+                        {% for p in data %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ loop.index }}
+
+                            </td>
+
+                            <td>
+
+                                {{ p[0] }}
+
+                            </td>
+
+                            <td>
+
+                                {{ p[1] }} Gardu
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <tr>
+
+                            <td colspan="3" class="text-center">
+
+                                Data tidak ditemukan.
+
+                            </td>
+
+                        </tr>
+
+                    {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        {% block title %}
+
+        TMS PLN
+
+        {% endblock %}
+
+    </title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-wrapper">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <!-- Logo -->
+
+        <div class="logo-sidebar">
+
+            <img src="{{ url_for('static', filename='img/logo_pln.png') }}"
+                 class="logo-pln"
+                 alt="PLN">
+
+            <div>
+
+                <h3>TMS</h3>
+
+                <small>Trafo Monitoring</small>
+
+            </div>
+
+        </div>
+
+        <!-- Menu -->
+
+        <div class="sidebar-title">
+
+            MENU UTAMA
+
+        </div>
+
+        <a href="/dashboard"
+           class="sidebar-item {% if request.path == '/dashboard' %}active{% endif %}">
+
+            <i class="bi bi-grid-fill"></i>
+
+            <span>Dashboard</span>
+
+        </a>
+
+        <a href="/gardu"
+           class="sidebar-item {% if request.path == '/gardu' %}active{% endif %}">
+
+            <i class="bi bi-lightning-charge-fill"></i>
+
+            <span>Data Gardu</span>
+
+        </a>
+
+        <a href="/penyulang"
+           class="sidebar-item {% if request.path == '/penyulang' %}active{% endif %}">
+
+            <i class="bi bi-diagram-3-fill"></i>
+
+            <span>Penyulang</span>
+
+        </a>
+
+        <a href="/pembebanan"
+           class="sidebar-item {% if request.path == '/pembebanan' %}active{% endif %}">
+
+            <i class="bi bi-speedometer2"></i>
+
+            <span>Pembebanan</span>
+
+        </a>
+
+        <a href="/pengecekan"
+           class="sidebar-item {% if request.path == '/pengecekan' %}active{% endif %}">
+
+            <i class="bi bi-clipboard2-check-fill"></i>
+
+            <span>Pengecekan</span>
+
+        </a>
+
+        {% if session["role"] == "admin" %}
+
+            <a href="/users"
+            class="sidebar-item {% if request.path == '/users' %}active{% endif %}">
+
+                <i class="bi bi-people-fill"></i>
+
+                <span>Kelola Akun</span>
+
+            </a>
+
+        {% endif %}
+
+        <!-- User -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-user">
+
+                <div class="avatar-circle">
+
+                    {{ session["nama"][0]|upper }}
+
+                </div>
+
+                <div>
+
+                    <div class="user-name">
+
+                        {{ session["nama"] }}
+
+                    </div>
+
+                    <div class="user-role">
+
+                        {% if session["role"] == "admin" %}
+
+                            Administrator
+
+                        {% else %}
+
+                            Petugas
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <a href="/logout"
+               class="logout-btn">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- Button Mobile -->
+
+    <button class="menu-toggle"
+            onclick="toggleSidebar()">
+
+        <i class="bi bi-list"></i>
+
+    </button>
+
+    <!-- Overlay -->
+
+    <div class="overlay"
+         id="overlay"
+         onclick="toggleSidebar()">
+
+    </div>
+
+    <!-- Content -->
+
+    <main class="content-area">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</div>
+
+<script>
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList
+        .toggle("show");
+
+    document
+        .getElementById("overlay")
+        .classList
+        .toggle("show");
+
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

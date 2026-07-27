@@ -1,168 +1,696 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-    <title>Penyulang</title>
+{% block title %}
+Pembebanan Trafo | TMS PLN
+{% endblock %}
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+{% block content %}
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-</head>
+<div class="page-header">
 
-<body class="bg-light">
-    {% include 'navbar.html' %}
+    <h1>
 
-<div class="container mt-4">
+        Pembebanan Trafo
 
-    <h2>Manajemen Beban Trafo</h2>
+    </h1>
 
-    <div class="card shadow p-4">
+    <p>
 
-        <div class="mb-3">
-            <label class="form-label">
-                Nama Gardu
-            </label>
+        Perhitungan pembebanan transformator distribusi PLN.
 
-            <select class="form-select">
-                <option>Gardu A</option>
-                <option>Gardu B</option>
-                <option>Gardu C</option>
-            </select>
-        </div>
+    </p>
 
-        <div class="mb-3">
-            <label class="form-label">
-                Kapasitas Trafo (kVA)
-            </label>
+</div>
 
-            <input type="number"
-                   id="kva"
-                   class="form-control"
-                   value="200">
-        </div>
+<div class="card">
 
-        <div class="mb-3">
-            <label class="form-label">
+    <div class="card-body p-4">
+
+        <!-- ================= FILTER ================= -->
+
+        <form method="GET">
+
+            <div class="row g-3 mb-4">
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        Tahun
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        name="tahun"
+                        onchange="this.form.submit()">
+
+                        {% for t in daftar_tahun %}
+
+                        <option
+                            value="{{ t }}"
+                            {% if tahun|string == t|string %}selected{% endif %}>
+
+                            {{ t }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        Triwulan
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        name="triwulan"
+                        onchange="this.form.submit()">
+
+                        {% for tr in daftar_triwulan %}
+
+                        <option
+                            value="{{ tr }}"
+                            {% if triwulan == tr %}selected{% endif %}>
+
+                            {{ tr }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <!-- ================= FORM ================= -->
+
+        <form method="POST">
+
+            <input
+                type="hidden"
+                name="tahun"
+                value="{{ tahun }}">
+
+            <input
+                type="hidden"
+                name="triwulan"
+                value="{{ triwulan }}">
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Nama Gardu
+
+                </label>
+
+                <select
+                    id="nama_gardu"
+                    name="nama_gardu"
+                    class="form-select"
+                    required>
+
+                    <option value="">
+
+                        -- Pilih Gardu --
+
+                    </option>
+
+                    {% for g in gardu_list %}
+
+                    <option value="{{ g[0] }}">
+
+                        {{ g[0] }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Kapasitas Trafo (kVA)
+
+                </label>
+
+                <input
+                    type="number"
+                    id="kva"
+                    name="kva"
+                    class="form-control"
+                    readonly
+                    required>
+
+            </div>
+
+            <hr>
+
+            <h4 class="mb-3">
+
                 Tegangan (Volt)
-            </label>
 
-            <input type="number"
-                   id="tegangan"
-                   class="form-control"
-                   value="400">
-        </div>
+            </h4>
 
-        <div class="mb-3">
-            <label class="form-label">
-                Arus Beban (Ampere)
-            </label>
+            <div class="row g-3 mb-4">
 
-            <input type="number"
-                   id="arus"
-                   class="form-control"
-                   value="180">
-        </div>
+                <div class="col-md-4">
 
-        <button type="button"
-                class="btn btn-primary w-100"
-                onclick="hitung()">
-            Hitung Pembebanan
-        </button>
+                    <label class="form-label">
 
-    </div>
+                        R - N
 
-    <br>
+                    </label>
 
-    <div class="card shadow p-4">
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="rn"
+                        class="form-control"
+                        required>
 
-        <h3>Hasil Perhitungan</h3>
+                </div>
 
-        <hr>
+                <div class="col-md-4">
 
-        <h5>
-            Arus Nominal :
-            <span id="nominal">-</span>
-        </h5>
+                    <label class="form-label">
 
-        <h5>
-            Persentase :
-            <span id="persen">-</span>
-        </h5>
+                        S - N
 
-        <h5>
-            Status :
-            <span id="status">-</span>
-        </h5>
+                    </label>
 
-        <h5>
-            Rekomendasi :
-            <span id="rekomendasi">-</span>
-        </h5>
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="sn"
+                        class="form-control"
+                        required>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        T - N
+
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        name="tn"
+                        class="form-control"
+                        required>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h4 class="mb-4">
+
+                Arus Fasa R (Ampere)
+
+            </h4>
+
+            <div class="row g-3">
+
+                {% for i in range(1,9) %}
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        R{{ i }}
+
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        class="form-control r"
+                        name="r{{ i }}"
+                        value="0"
+                        required>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="row mt-3 mb-5">
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Total Arus Fasa R
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="total_r"
+                        name="r"
+                        class="form-control"
+                        readonly>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h4 class="mb-4">
+
+                Arus Fasa S (Ampere)
+
+            </h4>
+
+            <div class="row g-3">
+
+                {% for i in range(1,9) %}
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        S{{ i }}
+
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        class="form-control s"
+                        name="s{{ i }}"
+                        value="0"
+                        required>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="row mt-3 mb-5">
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Total Arus Fasa S
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="total_s"
+                        name="s"
+                        class="form-control"
+                        readonly>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h4 class="mb-4">
+
+                Arus Fasa T (Ampere)
+
+            </h4>
+
+            <div class="row g-3">
+
+                {% for i in range(1,9) %}
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+
+                        T{{ i }}
+
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        class="form-control t"
+                        name="t{{ i }}"
+                        value="0"
+                        required>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <div class="row mt-3 mb-5">
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+
+                        Total Arus Fasa T
+
+                    </label>
+
+                    <input
+                        type="number"
+                        id="total_t"
+                        name="t"
+                        class="form-control"
+                        readonly>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <div class="d-grid">
+
+                <button
+                    type="submit"
+                    class="btn btn-primary btn-lg">
+
+                    <i class="bi bi-calculator-fill"></i>
+
+                    Hitung Pembebanan
+
+                </button>
+
+            </div>
+
+        </form>
 
     </div>
 
 </div>
 
-<script>
+{% if hasil %}
 
-function hitung() {
+<div class="card mt-4">
 
-    var kva = Number(document.getElementById("kva").value);
+    <div class="card-body">
 
-    var tegangan = Number(
-        document.getElementById("tegangan").value
-    );
+        <h3 class="mb-4">
 
-    var arus = Number(
-        document.getElementById("arus").value
-    );
+            Hasil Perhitungan Pembebanan
 
-    var nominal =
-        (kva * 1000) /
-        (1.732 * tegangan);
+        </h3>
 
-    var persen =
-        (arus / nominal) * 100;
+        <div class="table-responsive">
 
-    var status = "";
+            <table class="table table-bordered table-hover">
 
-    var rekomendasi = "";
+                <tbody>
 
-   if (persen < 20) {
-    status = "Rendah";
-    rekomendasi = "Beban sangat rendah.";
-    }
-    else if (persen < 80) {
-        status = "Normal";
-        rekomendasi = "Beban aman.";
-    }
-    else if (persen <= 100) {
-        status = "Waspada";
-        rekomendasi = "Perlu pemantauan.";
-    }
-    else {
-        status = "Overload";
-        rekomendasi = "Segera lakukan penanganan.";
-    }
+                    <tr>
 
-    document.getElementById("nominal").innerHTML =
-        nominal.toFixed(2) + " A";
+                        <th width="35%">
 
-    document.getElementById("persen").innerHTML =
-        persen.toFixed(2) + " %";
+                            Total Arus Fasa R
 
-    document.getElementById("status").innerHTML =
-        status;
+                        </th>
 
-    document.getElementById("rekomendasi").innerHTML =
-        rekomendasi;
-}
+                        <td>
+
+                            {{ hasil.total_r }} A
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Total Arus Fasa S
+
+                        </th>
+
+                        <td>
+
+                            {{ hasil.total_s }} A
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Total Arus Fasa T
+
+                        </th>
+
+                        <td>
+
+                            {{ hasil.total_t }} A
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Arus Nominal
+
+                        </th>
+
+                        <td>
+
+                            {{ hasil.nominal }} A
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Arus Rata-rata
+
+                        </th>
+
+                        <td>
+
+                            {{ hasil.rata }} A
+
+                        </td>
+
+                    </tr>
+                    
+                    <tr>
+                    
+                        <th>
+                    
+                            Persentase Pembebanan
+                    
+                        </th>
+                    
+                        <td>
+                    
+                            {{ hasil.persen }} %
+                    
+                        </td>
+                    
+                    </tr>
+                    
+                    <tr>
+                    
+                        <th>
+                    
+                            Status
+                    
+                        </th>
+                    
+                        <td>
+                    
+                            {% if hasil.status == "Normal" %}
+                    
+                            <span class="badge bg-success">
+                    
+                                Normal
+                    
+                            </span>
+                    
+                            {% elif hasil.status == "Waspada" %}
+                    
+                            <span class="badge bg-warning text-dark">
+                    
+                                Waspada
+                    
+                            </span>
+                    
+                            {% else %}
+                    
+                            <span class="badge bg-danger">
+                    
+                                Overload
+                    
+                            </span>
+                    
+                            {% endif %}
+                    
+                        </td>
+                    
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+<script type="application/json" id="data-gardu">
+
+{{ gardu_data | tojson }}
 
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
 
-</body>
-</html>
+const dataGardu = JSON.parse(
+    document.getElementById("data-gardu").textContent
+);
+
+document
+.getElementById("nama_gardu")
+.addEventListener("change", function(){
+
+    let nama = this.value;
+
+    if(dataGardu[nama]){
+
+        document.getElementById("kva").value =
+            dataGardu[nama];
+
+    }
+
+    else{
+
+        document.getElementById("kva").value = "";
+
+    }
+
+});
+
+function hitungTotalR(){
+
+    let total = 0;
+
+    document.querySelectorAll(".r").forEach(function(item){
+
+        total += parseFloat(item.value) || 0;
+
+    });
+
+    document.getElementById("total_r").value =
+        total.toFixed(2);
+
+}
+
+function hitungTotalS(){
+
+    let total = 0;
+
+    document.querySelectorAll(".s").forEach(function(item){
+
+        total += parseFloat(item.value) || 0;
+
+    });
+
+    document.getElementById("total_s").value =
+        total.toFixed(2);
+
+}
+
+function hitungTotalT(){
+
+    let total = 0;
+
+    document.querySelectorAll(".t").forEach(function(item){
+
+        total += parseFloat(item.value) || 0;
+
+    });
+
+    document.getElementById("total_t").value =
+        total.toFixed(2);
+
+}
+
+document.querySelectorAll(".r").forEach(function(item){
+
+    item.addEventListener(
+        "input",
+        hitungTotalR
+    );
+
+});
+
+document.querySelectorAll(".s").forEach(function(item){
+
+    item.addEventListener(
+        "input",
+        hitungTotalS
+    );
+
+});
+
+document.querySelectorAll(".t").forEach(function(item){
+
+    item.addEventListener(
+        "input",
+        hitungTotalT
+    );
+
+});
+
+window.onload = function(){
+
+    hitungTotalR();
+
+    hitungTotalS();
+
+    hitungTotalT();
+
+};
+
+</script>
+
+{% endblock %}

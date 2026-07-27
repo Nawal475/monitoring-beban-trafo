@@ -1,0 +1,235 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Tambah Gardu
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Tambah Gardu</h1>
+
+    <p>Tambah data gardu distribusi PLN.</p>
+
+</div>
+
+<div class="card">
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            <div class="row">
+
+                <!-- Nomor -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Nomor Urut
+
+                    </label>
+
+                    <input
+                        type="number"
+                        class="form-control"
+                        name="nomor"
+                        required>
+
+                </div>
+
+                <!-- Nama Gardu -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Nama Gardu
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="nama_gardu"
+                        required>
+
+                </div>
+
+                <!-- Penyulang -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Penyulang
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="penyulang"
+                        required>
+
+                </div>
+
+                <!-- No Gardu -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        No Gardu
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="no_gardu"
+                        required>
+
+                </div>
+
+                <!-- Wilayah -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Wilayah Kerja
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="wilayah"
+                        required>
+
+                </div>
+
+                <!-- Jenis -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Jenis
+
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="jenis"
+                        required>
+
+                </div>
+
+                <!-- Daya -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        Daya (kVA)
+
+                    </label>
+
+                    <input
+                        type="number"
+                        step="0.01"
+                        class="form-control"
+                        name="daya"
+                        required>
+
+                </div>
+
+                <!-- Tahun -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+
+                        Tahun
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        name="tahun"
+                        required>
+
+                        {% for t in daftar_tahun %}
+
+                        <option value="{{ t }}">
+
+                            {{ t }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+                <!-- Triwulan -->
+
+                <div class="col-md-3 mb-3">
+
+                    <label class="form-label">
+
+                        Triwulan
+
+                    </label>
+
+                    <select
+                        class="form-select"
+                        name="triwulan"
+                        required>
+
+                        {% for tr in daftar_triwulan %}
+
+                        <option value="{{ tr }}">
+
+                            {{ tr }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button
+                class="btn btn-primary">
+
+                <i class="bi bi-save"></i>
+
+                Simpan
+
+            </button>
+
+            <a
+                href="/gardu"
+                class="btn btn-secondary">
+
+                Batal
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

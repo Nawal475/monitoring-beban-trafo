@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Kelola Akun | TMS PLN
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Kelola Akun</h1>
+
+    <p>
+        Daftar seluruh akun pengguna TMS PLN.
+    </p>
+
+</div>
+
+<div class="card">
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Nama</th>
+
+                        <th>Email</th>
+
+                        <th>Username</th>
+
+                        <th>Role</th>
+
+                        <th width="180">Aksi</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for u in users %}
+
+                    <tr>
+
+                        <td>{{ u[0] }}</td>
+
+                        <td>{{ u[1] }}</td>
+
+                        <td>{{ u[2] }}</td>
+
+                        <td>{{ u[3] }}</td>
+
+                        <td>
+
+                            {% if u[4] == "admin" %}
+
+                                <span class="badge bg-danger">
+                                    Admin
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-success">
+                                    Petugas
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="/edit_user/{{ u[0] }}"
+                                class="btn btn-warning btn-sm">
+
+                                Edit
+
+                            </a>
+                            {% if u[4] == "admin" %}
+
+                            <button
+                                class="btn btn-danger btn-sm"
+                                disabled>
+
+                                Hapus
+
+                            </button>
+
+                            {% else %}
+
+                            <a
+                                href="/hapus_user/{{ u[0] }}"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('Yakin ingin menghapus akun ini?')">
+
+                                Hapus
+
+                            </a>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

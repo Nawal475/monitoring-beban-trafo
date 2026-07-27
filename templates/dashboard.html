@@ -1,104 +1,191 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-    <title>Dashboard</title>
+{% block title %}
+Dashboard | TMS PLN
+{% endblock %}
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+{% block content %}
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-</head>
+<div class="page-header">
 
-<body>
+    <h1>Dashboard</h1>
 
-    {% include 'navbar.html' %}
+    <p>
+        Selamat datang di Trafo Monitoring System PLN
+    </p>
 
-    <div class="header">
-        <h3>Monitoring Beban Trafo</h3>
-        <p>Halo, {{ username }}</p>
+</div>
+
+<!-- ================= WELCOME ================= -->
+
+<div class="welcome-card mb-5">
+
+    <div>
+
+        <h2>
+
+            Halo, {{ username }}
+
+        </h2>
+
+        <p>
+
+            Pantau kondisi gardu distribusi,
+            pembebanan trafo, dan aktivitas
+            pengecekan lapangan secara real-time.
+
+        </p>
+
     </div>
 
-    <div class="container mt-4">
+    <div class="welcome-right">
 
-        <div class="row g-3">
+        <img src="{{ url_for('static', filename='img/dashboard_pln.jpg') }}"
+             class="welcome-img"
+             alt="Dashboard">
 
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h2>{{ gardu }}</h2>
-                    <p>Gardu</p>
-                </div>
-            </div>
+    </div>
 
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h2>{{ penyulang }}</h2>
-                    <p>Penyulang</p>
-                </div>
-            </div>
+</div>
 
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h2>{{ beban }}%</h2>
-                    <p>Beban Rata-rata</p>
-                </div>
-            </div>
+<!-- ================= STATISTIK ================= -->
 
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h2>{{ overload }}</h2>
-                    <p>Gardu Overload</p>
-                </div>
-            </div>
+<div class="row g-4 mb-5">
 
-        </div>
+    <div class="col-xl-3 col-md-6">
 
-        <br>
+        <div class="mini-card">
 
-        <div class="row g-3">
+            <h2>{{ gardu }}</h2>
 
-            <div class="col-md-3">
-                <a href="/gardu" style="text-decoration:none">
-                    <div class="card-menu">
-                        <div class="menu-icon">🏭</div>
-                        <p>Data Gardu</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-3">
-                <a href="/penyulang" style="text-decoration:none">
-                    <div class="card-menu">
-                        <div class="menu-icon">⚡</div>
-                        <p>Penyulang</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-3">
-                <a href="/pembebanan" style="text-decoration:none">
-                    <div class="card-menu">
-                        <div class="menu-icon">📈</div>
-                        <p>Pembebanan</p>
-                    </div>
-                </a>
-            </div>
-
-            <div class="col-md-3">
-                <a href="/pengecekan" style="text-decoration:none">
-                    <div class="card-menu">
-                        <div class="menu-icon">📋</div>
-                        <p>Pengecekan</p>
-                    </div>
-                </a>
-            </div>
+            <span>Total Gardu</span>
 
         </div>
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="col-xl-3 col-md-6">
 
-</body>
-</html>
+        <div class="mini-card">
+
+            <h2>{{ penyulang }}</h2>
+
+            <span>Total Penyulang</span>
+
+        </div>
+
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="mini-card">
+
+            <h2>{{ overload }}</h2>
+
+            <span>Trafo Overload</span>
+
+        </div>
+
+    </div>
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="mini-card">
+
+            <h2>{{ beban }}%</h2>
+
+            <span>Rata-rata Beban</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= MENU ================= -->
+
+<div class="row g-4">
+
+    <div class="col-lg-3 col-md-6">
+
+        <a href="/gardu" class="menu-card">
+
+            <img src="{{ url_for('static', filename='img/datagardu_pln.jpg') }}"
+                 class="menu-img"
+                 alt="Data Gardu">
+
+            <h5>Data Gardu</h5>
+
+            <p>
+
+                Menampilkan seluruh data gardu distribusi PLN.
+
+            </p>
+
+        </a>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <a href="/penyulang" class="menu-card">
+
+            <img src="{{ url_for('static', filename='img/penyulang_pln.jpg') }}"
+                 class="menu-img"
+                 alt="Penyulang">
+
+            <h5>Penyulang</h5>
+
+            <p>
+
+                Informasi penyulang beserta jumlah gardu.
+
+            </p>
+
+        </a>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <a href="/pembebanan" class="menu-card">
+
+            <img src="{{ url_for('static', filename='img/pembebanan_pln.jpg') }}"
+                 class="menu-img"
+                 alt="Pembebanan">
+
+            <h5>Pembebanan</h5>
+
+            <p>
+
+                Menghitung persentase pembebanan trafo.
+
+            </p>
+
+        </a>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <a href="/pengecekan" class="menu-card">
+
+            <img src="{{ url_for('static', filename='img/pengecekan_pln.jpg') }}"
+                 class="menu-img"
+                 alt="Pengecekan">
+
+            <h5>Pengecekan</h5>
+
+            <p>
+
+                Monitoring hasil inspeksi gardu lapangan.
+
+            </p>
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
