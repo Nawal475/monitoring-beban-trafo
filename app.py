@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "pln123"
+app.secret_key = os.getenv("SECRET_KEY", "dev-only-fallback")
 
 @app.context_processor
 def inject_user():
