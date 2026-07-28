@@ -5,6 +5,9 @@ import os
 import io
 import pandas as pd
 from openpyxl import Workbook
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = "pln123"
@@ -18,10 +21,10 @@ def inject_user():
 # KONEKSI NEON
 def get_connection():
     return psycopg2.connect(
-        host="ep-shiny-morning-aok0mute.c-2.ap-southeast-1.aws.neon.tech",
-        database="neondb",
-        user="neondb_owner",
-        password="npg_h5wRukmMDtG0",
+        host=os.getenv("DB_HOST"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
         sslmode="require"
     )
 
