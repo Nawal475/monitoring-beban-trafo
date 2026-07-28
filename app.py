@@ -5,6 +5,9 @@ import os
 import io
 import pandas as pd
 from openpyxl import Workbook
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = "pln123"
